@@ -1,0 +1,5 @@
+WoodCutter: "Effekt: Baut den ganzen Baum mit einem Klick ab"
+BohrerWhiteList:
+  - STONE
+  - DIRT
+  - SAND

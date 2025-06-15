@@ -1,0 +1,7 @@
+name: EditEffect
+version: '1.0'
+main: de.Main.editEffect.Main
+api-version: '1.21'
+authors: [ nospighost ]
+softdepend:
+  - Vault
