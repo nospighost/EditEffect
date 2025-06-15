@@ -14,7 +14,7 @@ import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 import java.util.List;
-
+//OreFinder ist noch nicht registriert.
 public class OreFinder implements Listener {
 
     private final int RADIUS = 20;

@@ -1,4 +1,4 @@
-package de.Main.editEffect;
+package de.Main.editEffect.commands;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
@@ -12,8 +12,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 
-@CommandAlias("editeffect")
-@CommandPermission("be.editeffect")
+@CommandAlias("ce")
+@CommandPermission("be.ce")
 public class EditEffectCommand extends BaseCommand {
 
     private JavaPlugin plugin;
@@ -28,7 +28,7 @@ public class EditEffectCommand extends BaseCommand {
     }
 
     @Subcommand("Bohrer 1")
-    @CommandPermission("be.editeffect.Bohrer.1")
+    @CommandPermission("be.ce.Bohrer.1")
     public void onBohrer1(Player player, String[] args) {
         ItemStack hand = player.getInventory().getItemInMainHand();
         if (hand == null || hand.getType().isAir()) {
@@ -48,7 +48,7 @@ public class EditEffectCommand extends BaseCommand {
     }
 
     @Subcommand("Bohrer 2")
-    @CommandPermission("be.editeffect.Bohrer.2")
+    @CommandPermission("be.ce.Bohrer.2")
     public void onBohrer2(Player player, String[] args) {
         ItemStack hand = player.getInventory().getItemInMainHand();
         if (hand == null || hand.getType().isAir()) {
@@ -66,7 +66,7 @@ public class EditEffectCommand extends BaseCommand {
     }
 
     @Subcommand("WoodCutter 1")
-    @CommandPermission("be.editeffect.WoodCutter.1")
+    @CommandPermission("be.ce.WoodCutter.1")
     public void onWoodCutter1(Player player, String[] args) {
         ItemStack hand = player.getInventory().getItemInMainHand();
         if (hand == null || hand.getType().isAir()) {
@@ -84,7 +84,7 @@ public class EditEffectCommand extends BaseCommand {
     }
 
     @Subcommand("WoodCutter 2")
-    @CommandPermission("be.editeffect.WoodCutter.2")
+    @CommandPermission("be.ce.WoodCutter.2")
     public void onWoodCutter2(Player player, String[] args) {
         ItemStack hand = player.getInventory().getItemInMainHand();
         if (hand == null || hand.getType().isAir()) {
@@ -102,7 +102,7 @@ public class EditEffectCommand extends BaseCommand {
     }
 
     @Subcommand("AutoSmeltIngot")
-    @CommandPermission("be.editeffect.AutoSmeltIngot")
+    @CommandPermission("be.ce.AutoSmeltIngot")
     public void onAutoSmeltIngot(Player player, String[] args) {
         ItemStack hand = player.getInventory().getItemInMainHand();
         if (hand == null || hand.getType().isAir()) {
@@ -120,7 +120,7 @@ public class EditEffectCommand extends BaseCommand {
     }
 
     @Subcommand("AutoSmeltBlock")
-    @CommandPermission("be.editeffect.AutoSmeltBlock")
+    @CommandPermission("be.ce.AutoSmeltBlock")
     public void onAutoSmeltBlock(Player player, String[] args) {
         ItemStack hand = player.getInventory().getItemInMainHand();
         if (hand == null || hand.getType().isAir()) {
@@ -138,7 +138,7 @@ public class EditEffectCommand extends BaseCommand {
     }
 
     @Subcommand("VeinMiner")
-    @CommandPermission("be.editeffect.VeinMiner")
+    @CommandPermission("be.ce.VeinMiner")
     public void onVeinMiner(Player player, String[] args) {
         ItemStack hand = player.getInventory().getItemInMainHand();
         if (hand == null || hand.getType().isAir()) {
@@ -150,6 +150,41 @@ public class EditEffectCommand extends BaseCommand {
             meta.getPersistentDataContainer().set(key, PersistentDataType.INTEGER, 1);
             hand.setItemMeta(meta);
             player.sendMessage("§aVeinMiner Modus " + 1 + " erfolgreich gesetzt!");
+        } catch (NumberFormatException e) {
+            player.sendMessage("§cDer Modus muss eine Zahl 1 sein!");
+        }
+    }
+    @Subcommand("UnendlicheRakete")
+    @CommandPermission("be.ce.UnendlicheRakete")
+    public void onUnendlicheRakete(Player player, String[] args) {
+        ItemStack hand = player.getInventory().getItemInMainHand();
+        if (hand == null || hand.getType().isAir()) {
+            player.sendMessage("Du musst ein gültiges Item in der Hand halten, um diesen Befehl zu nutzen!");
+        }
+        try {
+            ItemMeta meta = hand.getItemMeta();
+            NamespacedKey key = new NamespacedKey(plugin, "InfinitRocket");
+            meta.getPersistentDataContainer().set(key, PersistentDataType.INTEGER, 1);
+            hand.setItemMeta(meta);
+            player.sendMessage("§aUnendlicheRakete Modus " + 1 + " erfolgreich gesetzt!");
+        } catch (NumberFormatException e) {
+            player.sendMessage("§cDer Modus muss eine Zahl 1 sein!");
+        }
+    }
+
+    @Subcommand("UnendlicheEnderPerle")
+    @CommandPermission("be.ce.InfinitEnderPeal")
+    public void onUnendlicheEnderPerle(Player player, String[] args) {
+        ItemStack hand = player.getInventory().getItemInMainHand();
+        if (hand == null || hand.getType().isAir()) {
+            player.sendMessage("Du musst ein gültiges Item in der Hand halten, um diesen Befehl zu nutzen!");
+        }
+        try {
+            ItemMeta meta = hand.getItemMeta();
+            NamespacedKey key = new NamespacedKey(plugin, "InfinitEnderPeal");
+            meta.getPersistentDataContainer().set(key, PersistentDataType.INTEGER, 1);
+            hand.setItemMeta(meta);
+            player.sendMessage("§aUnendlicheEnderPerle Modus erfolgreich gesetzt!");
         } catch (NumberFormatException e) {
             player.sendMessage("§cDer Modus muss eine Zahl 1 sein!");
         }

@@ -2,6 +2,7 @@ package de.Main.editEffect;
 
 import co.aikar.commands.PaperCommandManager;
 import de.Main.editEffect.Effects.*;
+import de.Main.editEffect.commands.EditEffectCommand;
 import de.Main.editEffect.commands.OpenGUICommand;
 import de.Main.editEffect.listener.ClickListenerAxt;
 import de.Main.editEffect.listener.ClickListenerSpitzhacken;
@@ -33,6 +34,8 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new AutoSmeltIngot(), this);
         Bukkit.getPluginManager().registerEvents(new AutoSmeltBlock(), this);
         Bukkit.getPluginManager().registerEvents(new VeinMiner(), this);
+        Bukkit.getPluginManager().registerEvents(new InfinitRocket(), this);
+        Bukkit.getPluginManager().registerEvents(new InfinitEnderPearl(), this);
 
         Bukkit.getPluginManager().registerEvents(new ClickListenerAxt(), this);
         Bukkit.getPluginManager().registerEvents(new ClickListenerSpitzhacken(), this);
