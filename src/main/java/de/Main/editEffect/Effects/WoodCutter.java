@@ -47,7 +47,8 @@ public class WoodCutter implements Listener {
                 Block targetBlock = targetLoc.getBlock();
                 if (!targetBlock.getType().isAir() && targetBlock.getType().toString().contains("LOG")) {
                     targetBlock.breakNaturally(hand);
-                    player.playSound(player.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_CHIME, 2f, 1f);
+
+                    Bukkit.getWorld(player.getWorld().getName()).playSound(player.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_CHIME, 2f, 1f);
                     targetBlock.getWorld().spawnParticle(Particle.FLAME, targetBlock.getLocation().add(0.5, 0.5, 0.5), 5, 0.3, 0.3, 0.3, 0.01);
                 } else {
                     break;
@@ -65,8 +66,8 @@ public class WoodCutter implements Listener {
 
         visited.add(block);
         block.breakNaturally(hand);
-        player.playSound(player.getLocation(), Sound.BLOCK_SPONGE_BREAK, 1f, 1f);
-        block.getWorld().spawnParticle(Particle.ANGRY_VILLAGER, block.getLocation().add(0.5, 0.5, 0.5), 1, 0.3, 0.3, 0.3, 0.01);
+        Bukkit.getWorld(player.getWorld().getName()).playSound(player.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_CHIME, 2f, 1f);
+        block.getWorld().spawnParticle(Particle.GLOW, block.getLocation().add(0.5, 0.5, 0.5), 1, 0.3, 0.3, 0.3, 0.01);
 
         for (Block neighbor : getAdjacentBlocks(block)) {
             breakConnectedBlocks(neighbor, hand, player, visited);
