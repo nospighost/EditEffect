@@ -20,25 +20,26 @@ public final class Main extends JavaPlugin {
     public void onEnable() {
         instance = this;
 
-        PaperCommandManager manager = new PaperCommandManager(this);
-        manager.registerCommand(new EditEffectCommand(this));
-        manager.registerCommand(new OpenGUICommand());
-        if (!setupEconomy()) {
-            getLogger().severe("Vault nicht gefunden oder keine Economy verfügbar!");
-            getServer().getPluginManager().disablePlugin(this);
-            return;
-        }
+       PaperCommandManager manager = new PaperCommandManager(this);
+       manager.registerCommand(new EditEffectCommand(this));
+       manager.registerCommand(new OpenGUICommand());
+       if (!setupEconomy()) {
+           getLogger().severe("Vault nicht gefunden oder keine Economy verfügbar!");
+           getServer().getPluginManager().disablePlugin(this);
+           return;
+       }
         saveDefaultConfig();
-        Bukkit.getPluginManager().registerEvents(new Bohrer(this), this);
-        Bukkit.getPluginManager().registerEvents(new WoodCutter(this), this);
-        Bukkit.getPluginManager().registerEvents(new AutoSmeltIngot(), this);
-        Bukkit.getPluginManager().registerEvents(new AutoSmeltBlock(), this);
-        Bukkit.getPluginManager().registerEvents(new VeinMiner(), this);
-        Bukkit.getPluginManager().registerEvents(new InfinitRocket(), this);
+      Bukkit.getPluginManager().registerEvents(new Bohrer(this), this);
+      Bukkit.getPluginManager().registerEvents(new WoodCutter(this), this);
+      Bukkit.getPluginManager().registerEvents(new AutoSmeltIngot(), this);
+      Bukkit.getPluginManager().registerEvents(new AutoSmeltBlock(), this);
+      Bukkit.getPluginManager().registerEvents(new VeinMiner(), this);
+      Bukkit.getPluginManager().registerEvents(new InfinitRocket(), this);
         Bukkit.getPluginManager().registerEvents(new InfinitEnderPearl(), this);
-
-        Bukkit.getPluginManager().registerEvents(new ClickListenerAxt(), this);
-        Bukkit.getPluginManager().registerEvents(new ClickListenerSpitzhacken(), this);
+       Bukkit.getPluginManager().registerEvents(new Telepathie(), this);
+        Bukkit.getPluginManager().registerEvents(new InfinitCoal(), this);
+       Bukkit.getPluginManager().registerEvents(new ClickListenerAxt(), this);
+       Bukkit.getPluginManager().registerEvents(new ClickListenerSpitzhacken(), this);
 
         getLogger().info("EditEfect erfolgreich gestartet.");
     }

@@ -25,17 +25,15 @@ public class InfinitEnderPearl implements Listener {
 
         NamespacedKey key = new NamespacedKey(Main.getInstance(), "InfinitEnderPeal");
         if (!meta.getPersistentDataContainer().has(key, PersistentDataType.INTEGER)) return;
-
-
-            Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
-                if (handitem.getAmount() == 0) {
-                    ItemStack newRocket = new ItemStack(Material.ENDER_PEARL, 1);
-                    newRocket.setItemMeta(meta);
-                    player.getInventory().setItemInMainHand(newRocket);
-                } else {
-                    handitem.setAmount(handitem.getAmount() + 1);
-                    handitem.setAmount(handitem.getAmount() - 1);
-                }
-            }, 1L);
+        Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
+            if (handitem.getAmount() == 0) {
+                ItemStack newRocket = new ItemStack(Material.ENDER_PEARL, 1);
+                newRocket.setItemMeta(meta);
+                player.getInventory().setItemInMainHand(newRocket);
+            } else {
+                handitem.setAmount(handitem.getAmount() + 1);
+                handitem.setAmount(handitem.getAmount() - 1);
+            }
+        }, 1L);
     }
 }

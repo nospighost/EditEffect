@@ -30,7 +30,7 @@ public class InfinitRocket implements Listener {
             Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
                 if (handitem.getAmount() == 0) {
                     ItemStack newRocket = new ItemStack(Material.FIREWORK_ROCKET, 1);
-                    newRocket.setItemMeta(meta); // Übernehme die Metadaten
+                    newRocket.setItemMeta(meta);
                     player.getInventory().setItemInMainHand(newRocket);
                 } else {
                     handitem.setAmount(handitem.getAmount() + 1);
@@ -41,16 +41,15 @@ public class InfinitRocket implements Listener {
             Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
                 if (handitem.getAmount() == 0) {
                     ItemStack newRocket = new ItemStack(Material.FIREWORK_ROCKET, 1);
-                    newRocket.setItemMeta(meta); // Übernehme die Metadaten
+                    newRocket.setItemMeta(meta);
                     player.getInventory().setItemInMainHand(newRocket);
                 } else {
                     handitem.setAmount(handitem.getAmount() + 1);
                     handitem.setAmount(handitem.getAmount() - 1);
                 }
-            }, 1L);}
+            }, 1L);
+        }
     }
-
-
 
 
 }

@@ -17,177 +17,207 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class EditEffectCommand extends BaseCommand {
 
     private JavaPlugin plugin;
-
+    public static String prefix = "§b§lBlockEngine §8» §7";
     public EditEffectCommand(JavaPlugin plugin) {
         this.plugin = plugin;
     }
 
     @Default
     public void oncommand(Player player, String[] args) {
-
+        player.sendMessage(prefix + "§7/ce WoodCutter <1/2> - Baut Stämme/Bäume mit einem Schlag ab und lässt Setzlinge mit rechtsklick Wachsen!");
+        player.sendMessage(prefix + "§7/ce Bohrer <1/2> - Baut 3x3 oder 5x5 Blöcke mit einem Schlag ab!");
+        player.sendMessage(prefix + "§7/ce AutoSmeltIngot - Schmilzt Erze zu Barren beim abbauen!");
+        player.sendMessage(prefix + "§7/ce AutoSmeltBlock - Schmilzt Erze zu Blöcken beim abbauen!");
+        player.sendMessage(prefix + "§7/ce VeinMiner - Baut alle Blöcke der selben Art in einem Umkreis von 3x3 ab!");
+        player.sendMessage(prefix + "§7/ce UnendlicheRakete - Erlaubt es dir Raketen unendlich zu nutzen!");
+        player.sendMessage(prefix + "§7/ce UnendlicheEnderPerle - Erlaubt es dir Enderperlen unendlich zu nutzen!");
+        player.sendMessage(prefix + "§7/ce UnendlicheKohle - Eine Unendliche Kohle für den Ofen!");
+        player.sendMessage(prefix + "§7/ce Telepathie - Lässt Items die du abbaust direkt in dein Inventar wandern!");
     }
 
-    @Subcommand("Bohrer 1")
+    private void addEffekt(Player player, String effekt, int stufe) {
+        ItemStack hand = player.getInventory().getItemInMainHand();
+        if (hand == null || hand.getType().isAir()) {
+            player.sendMessage(prefix + "Du musst ein gültiges Item in der Hand halten, um diesen Befehl zu nutzen!");
+            return;
+        }
+        ItemMeta meta = hand.getItemMeta();
+        NamespacedKey key = new NamespacedKey(plugin, effekt);
+        meta.getPersistentDataContainer().set(key, PersistentDataType.INTEGER, stufe);
+        hand.setItemMeta(meta);
+        player.sendMessage(prefix + "§aEffekt '" + effekt + "' (Stufe " + stufe + ") hinzugefügt!");
+    }
+
+    private void removeEffekt(Player player, String effekt) {
+        ItemStack hand = player.getInventory().getItemInMainHand();
+        if (hand == null || hand.getType().isAir()) {
+            player.sendMessage(prefix + "Du musst ein gültiges Item in der Hand halten, um diesen Befehl zu nutzen!");
+            return;
+        }
+        ItemMeta meta = hand.getItemMeta();
+        NamespacedKey key = new NamespacedKey(plugin, effekt);
+        if (meta.getPersistentDataContainer().has(key, PersistentDataType.INTEGER)) {
+            meta.getPersistentDataContainer().remove(key);
+            hand.setItemMeta(meta);
+            player.sendMessage(prefix + "§cEffekt '" + effekt + "' entfernt!");
+        } else {
+            player.sendMessage(prefix + "§7Effekt '" + effekt + "' ist nicht auf diesem Item.");
+        }
+    }
+
+    private void listEffekte(Player player) {
+        ItemStack hand = player.getInventory().getItemInMainHand();
+        if (hand == null || hand.getType().isAir()) {
+            player.sendMessage(prefix + "Du musst ein gültiges Item in der Hand halten, um diesen Befehl zu nutzen!");
+            return;
+        }
+        ItemMeta meta = hand.getItemMeta();
+        if (meta == null) {
+            player.sendMessage(prefix + "Keine Effekte auf diesem Item.");
+            return;
+        }
+        var container = meta.getPersistentDataContainer();
+        StringBuilder sb = new StringBuilder(prefix + "§7Effekte auf diesem Item: ");
+        boolean found = false;
+        for (NamespacedKey key : container.getKeys()) {
+            Integer stufe = container.get(key, PersistentDataType.INTEGER);
+            if (stufe != null) {
+                sb.append("§a").append(key.getKey()).append("§7[§e").append(stufe).append("§7], ");
+                found = true;
+            }
+        }
+        if (found) {
+            player.sendMessage(sb.substring(0, sb.length() - 2));
+        } else {
+            player.sendMessage(prefix + "Keine Effekte auf diesem Item.");
+        }
+    }
+
+    // --- Module für alle Effekte ---
+
+    @Subcommand("add bohrer 1")
     @CommandPermission("be.ce.Bohrer.1")
-    public void onBohrer1(Player player, String[] args) {
-        ItemStack hand = player.getInventory().getItemInMainHand();
-        if (hand == null || hand.getType().isAir()) {
-            player.sendMessage("Du musst ein gültiges Item in der Hand halten, um diesen Befehl zu nutzen!");
-        }
-        try {
-            ItemMeta meta = hand.getItemMeta();
-            NamespacedKey key = new NamespacedKey(plugin, "bohrer");
-            meta.getPersistentDataContainer().set(key, PersistentDataType.INTEGER, 1);
-            hand.setItemMeta(meta);
-
-            player.sendMessage("§aBohrer Modus " + 1 + " erfolgreich gesetzt!");
-        } catch (NumberFormatException e) {
-            player.sendMessage("§cDer Modus muss eine Zahl (1 oder 2) sein!");
-        }
-
+    public void addBohrer1(Player player) {
+        addEffekt(player, "bohrer", 1);
     }
 
-    @Subcommand("Bohrer 2")
+    @Subcommand("add bohrer 2")
     @CommandPermission("be.ce.Bohrer.2")
-    public void onBohrer2(Player player, String[] args) {
-        ItemStack hand = player.getInventory().getItemInMainHand();
-        if (hand == null || hand.getType().isAir()) {
-            player.sendMessage("Du musst ein gültiges Item in der Hand halten, um diesen Befehl zu nutzen!");
-        }
-        try {
-            ItemMeta meta = hand.getItemMeta();
-            NamespacedKey key = new NamespacedKey(plugin, "bohrer");
-            meta.getPersistentDataContainer().set(key, PersistentDataType.INTEGER, 2);
-            hand.setItemMeta(meta);
-            player.sendMessage("§aBohrer Modus " + 2 + " erfolgreich gesetzt!");
-        } catch (NumberFormatException e) {
-            player.sendMessage("§cDer Modus muss eine Zahl (1 oder 2) sein!");
-        }
+    public void addBohrer2(Player player) {
+        addEffekt(player, "bohrer", 2);
     }
 
-    @Subcommand("WoodCutter 1")
+    @Subcommand("remove bohrer")
+    @CommandPermission("be.ce.Bohrer")
+    public void removeBohrer(Player player) {
+        removeEffekt(player, "bohrer");
+    }
+
+    @Subcommand("add woodcutter 1")
     @CommandPermission("be.ce.WoodCutter.1")
-    public void onWoodCutter1(Player player, String[] args) {
-        ItemStack hand = player.getInventory().getItemInMainHand();
-        if (hand == null || hand.getType().isAir()) {
-            player.sendMessage("Du musst ein gültiges Item in der Hand halten, um diesen Befehl zu nutzen!");
-        }
-        try {
-            ItemMeta meta = hand.getItemMeta();
-            NamespacedKey key = new NamespacedKey(plugin, "woodcutter");
-            meta.getPersistentDataContainer().set(key, PersistentDataType.INTEGER, 1);
-            hand.setItemMeta(meta);
-            player.sendMessage("§aWoodCutter Modus " + 1 + " erfolgreich gesetzt!");
-        } catch (NumberFormatException e) {
-            player.sendMessage("§cDer Modus muss eine Zahl (1 oder 2) sein!");
-        }
+    public void addWoodCutter1(Player player) {
+        addEffekt(player, "woodcutter", 1);
     }
 
-    @Subcommand("WoodCutter 2")
+    @Subcommand("add woodcutter 2")
     @CommandPermission("be.ce.WoodCutter.2")
-    public void onWoodCutter2(Player player, String[] args) {
-        ItemStack hand = player.getInventory().getItemInMainHand();
-        if (hand == null || hand.getType().isAir()) {
-            player.sendMessage("Du musst ein gültiges Item in der Hand halten, um diesen Befehl zu nutzen!");
-        }
-        try {
-            ItemMeta meta = hand.getItemMeta();
-            NamespacedKey key = new NamespacedKey(plugin, "woodcutter");
-            meta.getPersistentDataContainer().set(key, PersistentDataType.INTEGER, 2);
-            hand.setItemMeta(meta);
-            player.sendMessage("§aWoodCutter Modus " + 2 + " erfolgreich gesetzt!");
-        } catch (NumberFormatException e) {
-            player.sendMessage("§cDer Modus muss eine Zahl (1 oder 2) sein!");
-        }
+    public void addWoodCutter2(Player player) {
+        addEffekt(player, "woodcutter", 2);
     }
 
-    @Subcommand("AutoSmeltIngot")
+    @Subcommand("remove woodcutter")
+    @CommandPermission("be.ce.WoodCutter")
+    public void removeWoodCutter(Player player) {
+        removeEffekt(player, "woodcutter");
+    }
+
+    @Subcommand("add autosmeltIngot 1")
     @CommandPermission("be.ce.AutoSmeltIngot")
-    public void onAutoSmeltIngot(Player player, String[] args) {
-        ItemStack hand = player.getInventory().getItemInMainHand();
-        if (hand == null || hand.getType().isAir()) {
-            player.sendMessage("Du musst ein gültiges Item in der Hand halten, um diesen Befehl zu nutzen!");
-        }
-        try {
-            ItemMeta meta = hand.getItemMeta();
-            NamespacedKey key = new NamespacedKey(plugin, "AutoSmeltIngot");
-            meta.getPersistentDataContainer().set(key, PersistentDataType.INTEGER, 1);
-            hand.setItemMeta(meta);
-            player.sendMessage("§aAutoSmeltIngot Modus " + 1 + " erfolgreich gesetzt!");
-        } catch (NumberFormatException e) {
-            player.sendMessage("§cDer Modus muss eine Zahl 1 sein!");
-        }
+    public void addAutoSmeltIngot(Player player) {
+        addEffekt(player, "AutoSmeltIngot", 1);
     }
 
-    @Subcommand("AutoSmeltBlock")
+    @Subcommand("remove autosmeltIngot")
+    @CommandPermission("be.ce.AutoSmeltIngot")
+    public void removeAutoSmeltIngot(Player player) {
+        removeEffekt(player, "AutoSmeltIngot");
+    }
+
+    @Subcommand("add autosmeltBlock 1")
     @CommandPermission("be.ce.AutoSmeltBlock")
-    public void onAutoSmeltBlock(Player player, String[] args) {
-        ItemStack hand = player.getInventory().getItemInMainHand();
-        if (hand == null || hand.getType().isAir()) {
-            player.sendMessage("Du musst ein gültiges Item in der Hand halten, um diesen Befehl zu nutzen!");
-        }
-        try {
-            ItemMeta meta = hand.getItemMeta();
-            NamespacedKey key = new NamespacedKey(plugin, "AutoSmeltBlock");
-            meta.getPersistentDataContainer().set(key, PersistentDataType.INTEGER, 1);
-            hand.setItemMeta(meta);
-            player.sendMessage("§aAutoSmeltBlock Modus " + 1 + " erfolgreich gesetzt!");
-        } catch (NumberFormatException e) {
-            player.sendMessage("§cDer Modus muss eine Zahl 1 sein!");
-        }
+    public void addAutoSmeltBlock(Player player) {
+        addEffekt(player, "AutoSmeltBlock", 1);
     }
 
-    @Subcommand("VeinMiner")
+    @Subcommand("remove autosmeltBlock")
+    @CommandPermission("be.ce.AutoSmeltBlock")
+    public void removeAutoSmeltBlock(Player player) {
+        removeEffekt(player, "AutoSmeltBlock");
+    }
+
+    @Subcommand("add veinMiner 1")
     @CommandPermission("be.ce.VeinMiner")
-    public void onVeinMiner(Player player, String[] args) {
-        ItemStack hand = player.getInventory().getItemInMainHand();
-        if (hand == null || hand.getType().isAir()) {
-            player.sendMessage("Du musst ein gültiges Item in der Hand halten, um diesen Befehl zu nutzen!");
-        }
-        try {
-            ItemMeta meta = hand.getItemMeta();
-            NamespacedKey key = new NamespacedKey(plugin, "VeinMiner");
-            meta.getPersistentDataContainer().set(key, PersistentDataType.INTEGER, 1);
-            hand.setItemMeta(meta);
-            player.sendMessage("§aVeinMiner Modus " + 1 + " erfolgreich gesetzt!");
-        } catch (NumberFormatException e) {
-            player.sendMessage("§cDer Modus muss eine Zahl 1 sein!");
-        }
+    public void addVeinMiner(Player player) {
+        addEffekt(player, "VeinMiner", 1);
     }
-    @Subcommand("UnendlicheRakete")
+
+    @Subcommand("remove veinMiner")
+    @CommandPermission("be.ce.VeinMiner")
+    public void removeVeinMiner(Player player) {
+        removeEffekt(player, "VeinMiner");
+    }
+
+    @Subcommand("add UnendlicheRakete 1")
     @CommandPermission("be.ce.UnendlicheRakete")
-    public void onUnendlicheRakete(Player player, String[] args) {
-        ItemStack hand = player.getInventory().getItemInMainHand();
-        if (hand == null || hand.getType().isAir()) {
-            player.sendMessage("Du musst ein gültiges Item in der Hand halten, um diesen Befehl zu nutzen!");
-        }
-        try {
-            ItemMeta meta = hand.getItemMeta();
-            NamespacedKey key = new NamespacedKey(plugin, "InfinitRocket");
-            meta.getPersistentDataContainer().set(key, PersistentDataType.INTEGER, 1);
-            hand.setItemMeta(meta);
-            player.sendMessage("§aUnendlicheRakete Modus " + 1 + " erfolgreich gesetzt!");
-        } catch (NumberFormatException e) {
-            player.sendMessage("§cDer Modus muss eine Zahl 1 sein!");
-        }
+    public void addUnendlicheRakete(Player player) {
+        addEffekt(player, "InfinitRocket", 1);
     }
 
-    @Subcommand("UnendlicheEnderPerle")
+    @Subcommand("remove UnendlicheRakete")
+    @CommandPermission("be.ce.UnendlicheRakete")
+    public void removeUnendlicheRakete(Player player) {
+        removeEffekt(player, "InfinitRocket");
+    }
+
+    @Subcommand("add InfinitEnderPeal 1")
     @CommandPermission("be.ce.InfinitEnderPeal")
-    public void onUnendlicheEnderPerle(Player player, String[] args) {
-        ItemStack hand = player.getInventory().getItemInMainHand();
-        if (hand == null || hand.getType().isAir()) {
-            player.sendMessage("Du musst ein gültiges Item in der Hand halten, um diesen Befehl zu nutzen!");
-        }
-        try {
-            ItemMeta meta = hand.getItemMeta();
-            NamespacedKey key = new NamespacedKey(plugin, "InfinitEnderPeal");
-            meta.getPersistentDataContainer().set(key, PersistentDataType.INTEGER, 1);
-            hand.setItemMeta(meta);
-            player.sendMessage("§aUnendlicheEnderPerle Modus erfolgreich gesetzt!");
-        } catch (NumberFormatException e) {
-            player.sendMessage("§cDer Modus muss eine Zahl 1 sein!");
-        }
+    public void addUnendlicheEnderPerle(Player player) {
+        addEffekt(player, "InfinitEnderPeal", 1);
     }
 
+    @Subcommand("remove InfinitEnderPeal")
+    @CommandPermission("be.ce.InfinitEnderPeal")
+    public void removeUnendlicheEnderPerle(Player player) {
+        removeEffekt(player, "InfinitEnderPeal");
+    }
+
+    @Subcommand("add telepathie 1")
+    @CommandPermission("be.ce.Telepathie")
+    public void addTelepathie(Player player) {
+        addEffekt(player, "Telepathie", 1);
+    }
+
+    @Subcommand("remove telepathie")
+    @CommandPermission("be.ce.Telepathie")
+    public void removeTelepathie(Player player) {
+        removeEffekt(player, "Telepathie");
+    }
+
+    @Subcommand("add UnendlicheKohle 1")
+    @CommandPermission("be.ce.UnendlicheKohle")
+    public void addUnendlicheKohle(Player player) {
+        addEffekt(player, "InfinitCoal", 1);
+    }
+
+    @Subcommand("remove UnendlicheKohle")
+    @CommandPermission("be.ce.UnendlicheKohle")
+    public void removeUnendlicheKohle(Player player) {
+        removeEffekt(player, "InfinitCoal");
+    }
+
+    @Subcommand("list")
+    @CommandPermission("be.ce")
+    public void listAll(Player player) {
+        listEffekte(player);
+    }
 }

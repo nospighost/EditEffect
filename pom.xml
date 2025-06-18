@@ -17,7 +17,7 @@
         </properties>
 
         <build>
-
+          <directory>D:\Dokumente\Server\plugins</directory>
             <plugins>
                 <!-- Compiler Plugin -->
                 <plugin>

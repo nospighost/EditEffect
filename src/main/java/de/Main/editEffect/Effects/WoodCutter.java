@@ -3,16 +3,19 @@ package de.Main.editEffect.Effects;
 import de.Main.editEffect.Main;
 import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 
 public class WoodCutter implements Listener {
@@ -86,5 +89,36 @@ public class WoodCutter implements Listener {
         return neighbors;
     }
 
+    @EventHandler(ignoreCancelled = true)
+    public void onPlayerInteract(PlayerInteractEvent event) {
+        Player player = event.getPlayer();
+        ItemStack hand = player.getInventory().getItemInMainHand();
+        Block block = event.getClickedBlock();
 
+        if (block == null || hand == null || !hand.hasItemMeta()) return;
+
+        String blocktype = block.getType().toString();
+        ItemMeta meta = hand.getItemMeta();
+        NamespacedKey key = new NamespacedKey(plugin, "woodcutter");
+
+        if (!meta.getPersistentDataContainer().has(key, PersistentDataType.INTEGER)) return;
+
+        if (blocktype.contains("_SAPLING")) {
+            event.setCancelled(true);
+            growTree(blocktype, block, player);
+        }
+    }
+    public static void growTree(String blocktype, Block block, Player player){
+        if (blocktype.contains("_SAPLING") && player.isSneaking()) {
+
+            Material saplingType = block.getType();
+            Location loc = block.getLocation();
+
+            if (new Random().nextFloat() < 0.45f) {
+                block.applyBoneMeal(BlockFace.UP);
+
+                // Effekte hinzufügen
+            }
+        }
+    }
 }
