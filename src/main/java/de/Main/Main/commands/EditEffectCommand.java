@@ -1,10 +1,11 @@
-package de.Main.editEffect.commands;
+package de.Main.Main.commands;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandPermission;
 import co.aikar.commands.annotation.Default;
 import co.aikar.commands.annotation.Subcommand;
+import net.milkbowl.vault.chat.Chat;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -18,6 +19,7 @@ public class EditEffectCommand extends BaseCommand {
 
     private JavaPlugin plugin;
     public static String prefix = "§b§lBlockEngine §8» §7";
+
     public EditEffectCommand(JavaPlugin plugin) {
         this.plugin = plugin;
     }
@@ -93,7 +95,7 @@ public class EditEffectCommand extends BaseCommand {
         }
     }
 
-    // --- Module für alle Effekte ---
+
 
     @Subcommand("add bohrer 1")
     @CommandPermission("be.ce.Bohrer.1")
@@ -113,6 +115,23 @@ public class EditEffectCommand extends BaseCommand {
         removeEffekt(player, "bohrer");
     }
 
+    @Subcommand("add PlotPicke 1")
+    @CommandPermission("be.ce.PlotPicke.1")
+    public void addPlotPicke1(Player player) {
+        addEffekt(player, "PlotPicke", 1);
+    }
+
+    @Subcommand("add PlotPicke 2")
+    @CommandPermission("be.ce.PlotPicke.2")
+    public void addPlotPicke2(Player player) {
+        addEffekt(player, "PlotPicke", 2);
+    }
+
+    @Subcommand("remove PlotPicke")
+    @CommandPermission("be.ce.PlotPicke")
+    public void removePlotPicke(Player player) {
+        removeEffekt(player, "PlotPicke");
+    }
     @Subcommand("add woodcutter 1")
     @CommandPermission("be.ce.WoodCutter.1")
     public void addWoodCutter1(Player player) {

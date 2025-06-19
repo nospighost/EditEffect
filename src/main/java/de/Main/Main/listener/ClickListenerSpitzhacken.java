@@ -1,6 +1,6 @@
-package de.Main.editEffect.listener;
+package de.Main.Main.listener;
 
-import de.Main.editEffect.Main;
+import de.Main.Main.Main;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;

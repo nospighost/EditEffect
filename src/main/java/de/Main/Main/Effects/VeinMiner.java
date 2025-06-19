@@ -1,7 +1,7 @@
-package de.Main.editEffect.Effects;
+package de.Main.Main.Effects;
 
-import de.Main.editEffect.Main;
-import de.Main.editEffect.Manager.EffectCompatibility;
+import de.Main.Main.Main;
+import de.Main.Main.Manager.EffectCompatibility;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;

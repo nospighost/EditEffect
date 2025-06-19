@@ -1,4 +1,4 @@
-package de.Main.editEffect.commands;
+package de.Main.Main.commands;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
@@ -6,8 +6,8 @@ import co.aikar.commands.annotation.CommandPermission;
 import co.aikar.commands.annotation.Default;
 import co.aikar.commands.annotation.Subcommand;
 
-import de.Main.editEffect.gui.UpgradeGUIAxt;
-import de.Main.editEffect.gui.UpgradeGUIPickaxe;
+import de.Main.Main.gui.UpgradeGUIAxt;
+import de.Main.Main.gui.UpgradeGUIPickaxe;
 import org.bukkit.entity.Player;
 
 @CommandAlias("upgrades")

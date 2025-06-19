@@ -1,7 +1,7 @@
-package de.Main.editEffect.Effects;
+package de.Main.Main.Effects;
 
-import de.Main.editEffect.Main;
-import de.Main.editEffect.Manager.EffectCompatibility;
+import de.Main.Main.Main;
+import de.Main.Main.Manager.EffectCompatibility;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -30,10 +30,11 @@ public class Bohrer implements Listener {
         Block centerBlock = event.getBlock();
 
         if (hand == null || hand.getType() == Material.AIR || !hand.hasItemMeta()) return;
-
         ItemMeta meta = hand.getItemMeta();
+        if (meta == null) return;
         NamespacedKey key = new NamespacedKey(plugin, "bohrer");
         if (!meta.getPersistentDataContainer().has(key, PersistentDataType.INTEGER)) return;
+        if((player.getWorld().getName().contains("Citybuild"))){return;} //Wenn es  in der CityBuild Welt ist, dann abbrechen
         if (!EffectCompatibility.isEffectCompatible(hand, "bohrer")) {
             return;
         }

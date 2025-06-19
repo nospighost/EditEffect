@@ -1,5 +1,6 @@
 name: EditEffect
 version: '1.0'
-main: de.Main.editEffect.Main
+main: de.Main.Main.Main
 api-version: '1.21'
 authors: [ nospighost ]
+depend: [WorldEdit]

@@ -1,6 +1,6 @@
-package de.Main.editEffect.Manager;
+package de.Main.Main.Manager;
 
-import de.Main.editEffect.Main;
+import de.Main.Main.Main;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;

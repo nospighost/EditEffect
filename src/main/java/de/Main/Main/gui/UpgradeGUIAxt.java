@@ -1,4 +1,4 @@
-package de.Main.editEffect.gui;
+package de.Main.Main.gui;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;

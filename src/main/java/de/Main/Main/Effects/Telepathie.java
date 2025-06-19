@@ -1,9 +1,7 @@
-package de.Main.editEffect.Effects;
+package de.Main.Main.Effects;
 
-import de.Main.editEffect.Main;
+import de.Main.Main.Main;
 import org.bukkit.*;
-import org.bukkit.block.Block;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
