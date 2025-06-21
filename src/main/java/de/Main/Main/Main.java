@@ -34,6 +34,7 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new Bohrer(this), this);
         Bukkit.getPluginManager().registerEvents(new PlotPicke(this), this);
         Bukkit.getPluginManager().registerEvents(new WoodCutter(this), this);
+        Bukkit.getPluginManager().registerEvents(new WoodSharper(this), this);
         Bukkit.getPluginManager().registerEvents(new AutoSmeltIngot(), this);
         Bukkit.getPluginManager().registerEvents(new AutoSmeltBlock(), this);
         Bukkit.getPluginManager().registerEvents(new VeinMiner(), this);

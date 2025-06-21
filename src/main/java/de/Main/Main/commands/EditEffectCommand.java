@@ -27,6 +27,7 @@ public class EditEffectCommand extends BaseCommand {
     @Default
     public void oncommand(Player player, String[] args) {
         player.sendMessage(prefix + "§7/ce WoodCutter <1/2> - Baut Stämme/Bäume mit einem Schlag ab und lässt Setzlinge mit rechtsklick Wachsen!");
+        player.sendMessage(prefix + "§7/ce WoodSharper <1/2> - Baut Stämme/Bäume mit einem Schlag ab und lässt Setzlinge mit rechtsklick Wachsen!");
         player.sendMessage(prefix + "§7/ce Bohrer <1/2> - Baut 3x3 oder 5x5 Blöcke mit einem Schlag ab!");
         player.sendMessage(prefix + "§7/ce AutoSmeltIngot - Schmilzt Erze zu Barren beim abbauen!");
         player.sendMessage(prefix + "§7/ce AutoSmeltBlock - Schmilzt Erze zu Blöcken beim abbauen!");
@@ -96,7 +97,6 @@ public class EditEffectCommand extends BaseCommand {
     }
 
 
-
     @Subcommand("add bohrer 1")
     @CommandPermission("be.ce.Bohrer.1")
     public void addBohrer1(Player player) {
@@ -132,6 +132,7 @@ public class EditEffectCommand extends BaseCommand {
     public void removePlotPicke(Player player) {
         removeEffekt(player, "PlotPicke");
     }
+
     @Subcommand("add woodcutter 1")
     @CommandPermission("be.ce.WoodCutter.1")
     public void addWoodCutter1(Player player) {
@@ -148,6 +149,24 @@ public class EditEffectCommand extends BaseCommand {
     @CommandPermission("be.ce.WoodCutter")
     public void removeWoodCutter(Player player) {
         removeEffekt(player, "woodcutter");
+    }
+
+    @Subcommand("add woodsharper 1")
+    @CommandPermission("be.ce.woodsharper.1")
+    public void addWoodwoodsharper1(Player player) {
+        addEffekt(player, "woodsharper", 1);
+    }
+
+    @Subcommand("add woodsharper 2")
+    @CommandPermission("be.ce.woodsharper.2")
+    public void addWoodwoodsharper2(Player player) {
+        addEffekt(player, "woodsharper", 2);
+    }
+
+    @Subcommand("remove woodsharper")
+    @CommandPermission("be.ce.woodsharper")
+    public void removeWoodwoodsharper(Player player) {
+        removeEffekt(player, "woodsharper");
     }
 
     @Subcommand("add autosmeltIngot 1")
