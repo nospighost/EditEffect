@@ -25,7 +25,7 @@ public final class Main extends JavaPlugin {
         manager.registerCommand(new EditEffectCommand(this));
         manager.registerCommand(new OpenGUICommand());
         if (!setupEconomy()) {
-            getLogger().severe("Vault nicht gefunden oder keine Economy verfügbar!");
+            getLogger().severe("Vault nicht gefunden oder keine Economy verfügbar!.");
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
